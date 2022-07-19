@@ -7,7 +7,7 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'dev-m-gih2pc.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'https://dev-m-gih2pc.us.auth0.com/api/v2/'
+API_AUDIENCE = 'http://localhost:5000'
 
 ## AuthError Exception
 '''
@@ -61,7 +61,7 @@ def get_token_auth_header():
     token = parts[1]
     return token
 # def get_token_auth_header():
-#    raise Exception('Not Implemented')
+# raise Exception('Not Implemented')
 
 '''
 @TODO implement check_permissions(permission, payload) method
