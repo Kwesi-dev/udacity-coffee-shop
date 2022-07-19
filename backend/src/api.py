@@ -65,14 +65,9 @@ def get_drink_detail(jwt):
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
 def post_drink(jwt):
-    data = request.get_json()
-    if 'title' and 'recipe' not in data:
-        abort(422)
-
-    title = data['title']
-    recipe_json = json.dumps(data['recipe'])
-
-    drink = Drink(title=title, recipe=recipe_json)
+    title = request.form.get('title', None)
+    recipe = json.dumps(request.form.get('recipe', None))
+    drink = Drink(title=title, recipe=recipe)
 
     drink.insert()
 
@@ -99,16 +94,12 @@ def update_drink(jwt, id):
     drink = Drink.query.get(id)
     if drink is None:
         abort(404)
-
     data = request.get_json()
     if 'title' in data:
         drink.title = data['title']
-
     if 'recipe' in data:
         drink.recipe = json.dumps(data['recipe'])
-
     drink.update()
-
     return jsonify({
         'success': True,
         'drinks': [drink.long()]

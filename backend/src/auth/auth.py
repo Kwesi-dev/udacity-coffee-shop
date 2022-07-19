@@ -58,9 +58,8 @@ def get_token_auth_header():
             'code': 'invalid_header',
             'description': 'Authorization header must be bearer token.'
         }, 401)
-
     token = parts[1]
-    return 
+    return token
 # def get_token_auth_header():
 #    raise Exception('Not Implemented')
 
