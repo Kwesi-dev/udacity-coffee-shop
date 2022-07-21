@@ -28,6 +28,7 @@ db_drop_and_create_all()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+@app.route("/drinks", methods=['GET'])
 def get_drinks():
     drinks = Drink.query.order_by(Drink.id).all()
     return jsonify({
@@ -170,8 +171,10 @@ def resource_not_found(error):
 @TODO implement error handler for AuthError
     error handler should conform to general task above
 '''
-def process_AuthError(error):
-    response = jsonify(error.error)
-    response.status_code = error.status_code
-
-    return response
+@app.errorhandler(AuthError)
+def process_auth_error(er):
+   return jsonify({
+        "success": False,
+        "error": er.error.code,
+        "message": er.error.code
+    }), er.status_code
