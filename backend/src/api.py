@@ -172,9 +172,8 @@ def resource_not_found(error):
     error handler should conform to general task above
 '''
 @app.errorhandler(AuthError)
-def process_auth_error(er):
-   return jsonify({
-        "success": False,
-        "error": er.error.code,
-        "message": er.error.code
-    }), er.status_code
+def process_AuthError(error):
+    response = jsonify(error.error)
+    response.status_code = error.status_code
+
+    return response
